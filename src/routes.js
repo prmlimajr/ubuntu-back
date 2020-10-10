@@ -6,6 +6,7 @@ const authMiddleware = require('./app/middlewares/auth');
 const UserController = require('./app/controllers/UserController');
 const SessionController = require('./app/controllers/SessionController');
 const ProfileController = require('./app/controllers/ProfileController');
+const FileController = require('./app/controllers/FileController');
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -15,5 +16,6 @@ routes.post('/session', SessionController.create);
 
 routes.use(authMiddleware);
 routes.post('/profile', ProfileController.create);
+routes.post('/avatar', upload.single('file'), FileController.store);
 
 module.exports = routes;
