@@ -52,8 +52,6 @@ class FeedController {
     });
     return res.json(feed);
   }
-
-  async listFromConnection(req, res) {}
 }
 
 module.exports = new FeedController();
