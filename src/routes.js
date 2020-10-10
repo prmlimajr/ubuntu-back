@@ -22,5 +22,6 @@ routes.get('/profile', ProfileController.listAll);
 routes.post('/avatar', upload.single('file'), FileController.store);
 routes.post('/interest', InterestController.create);
 routes.post('/connect', ConnectionController.create);
+routes.get('/connect', ConnectionController.list);
 
 module.exports = routes;
