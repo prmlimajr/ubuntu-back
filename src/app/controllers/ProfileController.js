@@ -72,6 +72,41 @@ class ProfilerController {
       ...userProfile,
     });
   }
+
+  async listAll(req, res) {
+    let query = await connection('user_profile')
+      .select(
+        'user_profile.*',
+        'users.user_name as uUser_name',
+        'users.email as uEmail',
+        'users.phone as uPhone'
+      )
+      .join('users', 'users.id', 'user_profile.user_id');
+
+    const userLists = query.map((row) => {
+      return {
+        id: row.user_id,
+        name: row.uUser_name,
+        email: row.uEmail,
+        phone: row.uPhone,
+        age: row.age,
+        profession: row.profession,
+        bio: row.bio,
+        story: row.story,
+        technique: row.technique,
+        Address: {
+          address: row.address,
+          city: row.city,
+          state: row.state,
+          CEP: row.CEP,
+          latitude: row.latitude,
+          longitude: row.longitude,
+        },
+      };
+    });
+
+    return res.json(userLists);
+  }
 }
 
 module.exports = new ProfilerController();

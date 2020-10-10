@@ -17,6 +17,7 @@ routes.post('/session', SessionController.create);
 
 routes.use(authMiddleware);
 routes.post('/profile', ProfileController.create);
+routes.get('/profile', ProfileController.listAll);
 routes.post('/avatar', upload.single('file'), FileController.store);
 routes.post('/interest', InterestController.create);
 
