@@ -8,6 +8,7 @@ const SessionController = require('./app/controllers/SessionController');
 const ProfileController = require('./app/controllers/ProfileController');
 const FileController = require('./app/controllers/FileController');
 const InterestController = require('./app/controllers/InterestController');
+const ConnectionController = require('./app/controllers/ConnectionController');
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -20,5 +21,6 @@ routes.post('/profile', ProfileController.create);
 routes.get('/profile', ProfileController.listAll);
 routes.post('/avatar', upload.single('file'), FileController.store);
 routes.post('/interest', InterestController.create);
+routes.post('/connect', ConnectionController.create);
 
 module.exports = routes;
