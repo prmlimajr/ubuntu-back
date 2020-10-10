@@ -10,6 +10,7 @@ const FileController = require('./app/controllers/FileController');
 const InterestController = require('./app/controllers/InterestController');
 const ConnectionController = require('./app/controllers/ConnectionController');
 const FeedController = require('./app/controllers/FeedController');
+const ReplyController = require('./app/controllers/ReplyController');
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -26,5 +27,7 @@ routes.post('/connect', ConnectionController.create);
 routes.get('/connect', ConnectionController.list);
 routes.post('/comment', FeedController.create);
 routes.get('/comment', FeedController.list);
+routes.post('/reply', ReplyController.create);
+routes.get('/reply/:id', ReplyController.list);
 
 module.exports = routes;
