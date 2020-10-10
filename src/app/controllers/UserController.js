@@ -13,7 +13,7 @@ class UserController {
       `[${name}][${email}][${phone}][${password}][${confirmPassword}]`
     );
 
-    const Schema = Yup.object().shape({
+    const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string().email().required(),
       phone: Yup.string().required(),
@@ -21,7 +21,7 @@ class UserController {
       confirmPassword: Yup.string().required(),
     });
 
-    if (!(await Schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.body))) {
       console.log('Validation failed');
       return res.status(400).json({ error: 'Validation failed' });
     }
