@@ -39,9 +39,7 @@ class FeedController {
       .where('user_profile.user_id', '=', req.userId);
     const profile_id = profile.id;
 
-    const list = await connection('feed')
-      .select('feed.*')
-      .where('feed.profile_id', '=', profile_id);
+    const list = await connection('feed').select('feed.*');
 
     const feed = list.map((row) => {
       return {
@@ -54,6 +52,8 @@ class FeedController {
     });
     return res.json(feed);
   }
+
+  async listFromConnection(req, res) {}
 }
 
 module.exports = new FeedController();
