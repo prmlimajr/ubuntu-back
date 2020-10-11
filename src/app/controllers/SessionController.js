@@ -8,7 +8,7 @@ class SessionController {
   async create(req, res) {
     console.log('controller - session - create');
 
-    const { email, password } = req.body;
+    const { email, password } = req.body.data;
     console.log(`[${email}][${password}]`);
 
     const schema = Yup.object().shape({
@@ -16,7 +16,7 @@ class SessionController {
       password: Yup.string().min(6).required(),
     });
 
-    if (!(await schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.body.data))) {
       console.log('Validation failed');
       return res.status(400).json({ error: 'Validation failed' });
     }

@@ -7,7 +7,7 @@ class UserController {
   async create(req, res) {
     console.log('controller - user - create');
 
-    const { name, email, phone, password, confirmPassword } = req.body;
+    const { name, email, phone, password, confirmPassword } = req.body.data;
 
     console.log(
       `[${name}][${email}][${phone}][${password}][${confirmPassword}]`
@@ -21,7 +21,7 @@ class UserController {
       confirmPassword: Yup.string().required(),
     });
 
-    if (!(await schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.body.data))) {
       console.log('Validation failed');
       return res.status(400).json({ error: 'Validation failed' });
     }
