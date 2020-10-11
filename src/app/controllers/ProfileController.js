@@ -110,17 +110,6 @@ class ProfilerController {
       };
     });
 
-    // const userAvatar = userLists.map(async (row) => {
-    //   const [avatarExists] = await connection('user_avatar')
-    //     .select('user_avatar.*')
-    //     .where('user_avatar.profile_id', '=', row.id);
-
-    //   const avatarPath = avatarExists !== undefined ? avatarExists.path : null;
-
-    //   const fullPath = `${process.env.APP_URL}/files/${avatarPath}`;
-    //   console.log(fullPath);
-    // });
-
     return res.json(userLists);
   }
 }
