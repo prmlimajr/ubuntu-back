@@ -85,7 +85,6 @@ class ProfilerController {
 
     const userLists = query.map((row) => {
       return {
-        id: row.id,
         user_id: req.userId,
         name: row.uUser_name,
         email: row.uEmail,
