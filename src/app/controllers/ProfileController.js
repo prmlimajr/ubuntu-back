@@ -85,7 +85,8 @@ class ProfilerController {
 
     const userLists = query.map((row) => {
       return {
-        id: row.user_id,
+        id: row.id,
+        user_id: req.userId,
         name: row.uUser_name,
         email: row.uEmail,
         phone: row.uPhone,
@@ -105,6 +106,19 @@ class ProfilerController {
       };
     });
 
+    const userAvatar = userLists.map(async (row) => {
+      const [avatarExists] = await connection('user_avatar')
+        .select('user_avatar.*')
+        .where('user_avatar.profile_id', '=', row.id);
+
+      const avatarPath = avatarExists !== undefined ? avatarExists.path : null;
+
+      const fullPath = `${process.env.APP_URL}/files/${avatarPath}`;
+
+      userAvatar.avatar = fullPath;
+    });
+
+    await console.log(userAvatar);
     return res.json(userLists);
   }
 }

@@ -24,6 +24,7 @@ routes.get('/profile', ProfileController.listAll);
 routes.post('/avatar', upload.single('file'), FileController.store);
 routes.get('/avatar', FileController.list);
 routes.post('/interest', InterestController.create);
+routes.get('/interest', InterestController.list);
 routes.post('/connect', ConnectionController.create);
 routes.get('/connect', ConnectionController.list);
 routes.post('/comment', FeedController.create);
