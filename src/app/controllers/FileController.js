@@ -18,6 +18,22 @@ class FileController {
 
     return res.json(insertedFile);
   }
+
+  async list(req, res) {
+    const [profile] = await connection('user_profile')
+      .select('user_profile.*')
+      .where('user_profile.user_id', '=', req.userId);
+    const profile_id = profile.id;
+
+    const [avatarExists] = await connection('user_avatar')
+      .select('user_avatar.*')
+      .where('user_avatar.profile_id', '=', profile_id);
+    const avatarPath = avatarExists.path;
+
+    const fullPath = `${process.env.APP_URL}/files/${avatarPath}`;
+
+    return res.json(fullPath);
+  }
 }
 
 module.exports = new FileController();
