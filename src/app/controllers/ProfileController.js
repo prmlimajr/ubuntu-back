@@ -79,14 +79,11 @@ class ProfilerController {
         'user_profile.*',
         'users.user_name as uUser_name',
         'users.email as uEmail',
-        'users.phone as uPhone',
-        'user_avatar.path as uaPath'
+        'users.phone as uPhone'
       )
-      .join('users', 'users.id', 'user_profile.user_id')
-      .leftJoin('user_avatar', 'user_avatar.profile_id', 'user_profile.id');
+      .join('users', 'users.id', 'user_profile.user_id');
 
     const userLists = query.map((row) => {
-      const avatar = `${process.env.APP_URL}/files/${row.uaPath}`;
       return {
         id: row.id,
         user_id: req.userId,
@@ -106,7 +103,6 @@ class ProfilerController {
           latitude: row.latitude,
           longitude: row.longitude,
         },
-        avatar,
       };
     });
 

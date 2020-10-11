@@ -20,19 +20,32 @@ class FileController {
   }
 
   async list(req, res) {
+    const { id } = req.params;
+
     const [profile] = await connection('user_profile')
       .select('user_profile.*')
-      .where('user_profile.user_id', '=', req.userId);
+      .where('user_profile.user_id', '=', id);
+
+    if (!profile) {
+      return res.status(400).json({ error: 'profile doesnot exist' });
+    }
     const profile_id = profile.id;
 
     const [avatarExists] = await connection('user_avatar')
       .select('user_avatar.*')
       .where('user_avatar.profile_id', '=', profile_id);
+
+    if (!avatarExists) {
+      return res.status(400).json({ error: 'Avatar doesnot exist' });
+    }
+
     const avatarPath = avatarExists.path;
 
     const fullPath = `${process.env.APP_URL}/files/${avatarPath}`;
 
-    return res.json(fullPath);
+    return res.json({
+      avatar: fullPath,
+    });
   }
 }
 

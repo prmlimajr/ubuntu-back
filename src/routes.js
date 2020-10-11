@@ -22,7 +22,7 @@ routes.use(authMiddleware);
 routes.post('/profile', ProfileController.create);
 routes.get('/profile', ProfileController.listAll);
 routes.post('/avatar', upload.single('file'), FileController.store);
-routes.get('/avatar', FileController.list);
+routes.get('/avatar/:id', FileController.list);
 routes.post('/interest', InterestController.create);
 routes.get('/interest', InterestController.list);
 routes.get('/interest/:id', InterestController.listAnotherUser);
