@@ -79,11 +79,14 @@ class ProfilerController {
         'user_profile.*',
         'users.user_name as uUser_name',
         'users.email as uEmail',
-        'users.phone as uPhone'
+        'users.phone as uPhone',
+        'user_avatar.path as uaPath'
       )
-      .join('users', 'users.id', 'user_profile.user_id');
+      .join('users', 'users.id', 'user_profile.user_id')
+      .leftJoin('user_avatar', 'user_avatar.profile_id', 'user_profile.id');
 
     const userLists = query.map((row) => {
+      const avatar = `${process.env.APP_URL}/files/${row.uaPath}`;
       return {
         id: row.id,
         user_id: req.userId,
@@ -103,22 +106,21 @@ class ProfilerController {
           latitude: row.latitude,
           longitude: row.longitude,
         },
+        avatar,
       };
     });
 
-    const userAvatar = userLists.map(async (row) => {
-      const [avatarExists] = await connection('user_avatar')
-        .select('user_avatar.*')
-        .where('user_avatar.profile_id', '=', row.id);
+    // const userAvatar = userLists.map(async (row) => {
+    //   const [avatarExists] = await connection('user_avatar')
+    //     .select('user_avatar.*')
+    //     .where('user_avatar.profile_id', '=', row.id);
 
-      const avatarPath = avatarExists !== undefined ? avatarExists.path : null;
+    //   const avatarPath = avatarExists !== undefined ? avatarExists.path : null;
 
-      const fullPath = `${process.env.APP_URL}/files/${avatarPath}`;
+    //   const fullPath = `${process.env.APP_URL}/files/${avatarPath}`;
+    //   console.log(fullPath);
+    // });
 
-      userAvatar.avatar = fullPath;
-    });
-
-    await console.log(userAvatar);
     return res.json(userLists);
   }
 }
